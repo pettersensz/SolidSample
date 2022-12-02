@@ -9,6 +9,9 @@
                 case PolicyType.Auto:
                     return new AutoPolicyRater(engine, engine.Logger);
 
+                case PolicyType.Flood:
+                    return new FloodPolicyRater(engine, engine.Logger);
+
                 case PolicyType.Land:
                     return new LandPolicyRater(engine, engine.Logger);
 
