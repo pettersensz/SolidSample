@@ -1,8 +1,7 @@
 ﻿using ArdalisRating.Logging;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using ArdalisRating.Persistence;
+using ArdalisRating.Serialization;
 using System;
-using System.IO;
 
 namespace ArdalisRating
 {
@@ -12,6 +11,8 @@ namespace ArdalisRating
     /// </summary>
     public class RatingEngine
     {
+        public PolicySerializer PolicySerializer { get; set; } = new PolicySerializer();
+        public FilePolicySource PolicySource { get; set; } = new FilePolicySource();
         public ConsoleLogger Logger { get; set; } = new ConsoleLogger();
         public decimal Rating { get; set; }
         public void Rate()
@@ -21,10 +22,9 @@ namespace ArdalisRating
             Logger.Log("Loading policy.");
 
             // load policy - open file policy.json
-            string policyJson = File.ReadAllText("policy.json");
+            string policyJson = PolicySource.GetPolicyFromSource();
 
-            var policy = JsonConvert.DeserializeObject<Policy>(policyJson,
-                new StringEnumConverter());
+            var policy = PolicySerializer.GetPolicyFromJsonString(policyJson);
 
             switch (policy.Type)
             {
