@@ -3,18 +3,11 @@ using System;
 
 namespace ArdalisRating.PolicyRating
 {
-    public class LifePolicyRater
+    public class LifePolicyRater : Rater
     {
-        private readonly RatingEngine _engine;
-        private ConsoleLogger _logger;
+        public LifePolicyRater(RatingEngine engine, ConsoleLogger logger) : base(engine, logger) { }
 
-        public LifePolicyRater(RatingEngine engine, ConsoleLogger logger)
-        {
-            _engine = engine;
-            _logger = logger;
-        }
-
-        public void Rate(Policy policy)
+        public override void Rate(Policy policy)
         {
             _logger.Log("Rating LIFE policy...");
             _logger.Log("Validating policy.");
